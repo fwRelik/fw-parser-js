@@ -9,7 +9,12 @@ export class PPTR implements IPPTR {
     constructor(private logger: ILogger) { }
 
     launch = async (): Promise<any> => {
-        this.browser = await puppeteer.launch();
+        this.browser = await puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ]
+        });
         this.page = await this.browser.newPage();
         this.logger.log('PPTR Service Started');
     }
